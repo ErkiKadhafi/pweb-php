@@ -8,6 +8,9 @@
     $student = query("SELECT * FROM students WHERE id = $id")[0];
     // debug($student);
 
+    // var_dump($student);
+    // die();
+
     if(isset($_POST["submit"])){
         global $id;
 
@@ -64,8 +67,12 @@
 	  <main class="container-xl">
 		  <h1 class="text-center mt-4 mb-4 fs-sm-1 fs-4">Add New Student</h1>
 		  <div class="mx-md-auto mx-3 border py-3 px-3 rounded-1 shadow-sm mb-2" style="max-width: 40rem;">
-            <h2 class="text-center fs-4">Form Student</h2>
-            <form action="" method="POST">
+            <h2 class="text-center fs-4">Form Student Edit</h2>
+            <div class="d-flex justify-content-center my-3">
+                <img style="width: 8rem;" src="./img/<?= $student["image"] ?>" alt="<?= $student["name"]?> image">
+            </div>
+            <form action="" method="POST" enctype="multipart/form-data">
+                <input type="hidden" name="gambarLama" value="<?= $mhs["gambar"]; ?>">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input required name="name" type="text" 
@@ -127,12 +134,16 @@
                         </option>
                     </select>
                 </div>
-                <div class="mb-5">
+                <div class="mb-3">
                     <label for="school_origin" class="form-label">School Origin</label>
                     <input required name="school_origin" type="text" 
                         class="form-control" id="school_origin" 
                         placeholder="SMAN 1 Kota Bekasi"
                         value="<?= $student["school_origin"] ;?>">
+                </div>
+                <div class="mb-5">
+                    <label for="image" class="form-label">Edit Image</label>
+                    <input required name="image" type="file" class="form-control" id="image" value="">
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
             </form>

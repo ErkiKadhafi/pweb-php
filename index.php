@@ -31,7 +31,7 @@
                       </ul>
                   </div>
               </div>
-          </nav>
+          </nav>	
       </header>
 	  <main class="container-xl">
 		  <h1 class="text-center mt-4 mb-5 fs-sm-1 fs-4">Student List PPDB Jatim</h1>
@@ -65,6 +65,9 @@
 							<td><?= $student["gender"] ?></td>
 							<td><?= $student["religion"] ?></td>
 							<td><?= $student["school_origin"] ?></td>
+							<td>
+								<img style="width: 5rem;" src="./img/<?= $student["image"] ?>" alt="<?= $student["name"]?> image">
+							</td>
 							<td >
 								<button type="button" class="btn btn-warning btn-sm btn-lg-lg">
 									<a href="edit.php?id=<?= $student["id"]; ?>" 

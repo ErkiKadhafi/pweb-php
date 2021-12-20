@@ -57,7 +57,7 @@
 		  <h1 class="text-center mt-4 mb-4 fs-sm-1 fs-4">Add New Student</h1>
 		  <div class="mx-md-auto mx-3 border py-3 px-3 rounded-1 shadow-sm mb-2" style="max-width: 40rem;">
             <h2 class="text-center fs-4">Form Student</h2>
-            <form action="" method="POST">
+            <form action="" method="POST" enctype="multipart/form-data">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
                     <input required name="name" type="text" class="form-control" id="name" placeholder="Michael Alexander">
@@ -92,9 +92,13 @@
                         <option value="konguchu">Konguchu</option>
                     </select>
                 </div>
-                <div class="mb-5">
+                <div class="mb-3">
                     <label for="school_origin" class="form-label">School Origin</label>
                     <input required name="school_origin" type="text" class="form-control" id="school_origin" placeholder="SMAN 1 Kota Bekasi">
+                </div>
+                <div class="mb-5">
+                    <label for="image" class="form-label">Upload Image</label>
+                    <input required name="image" type="file" class="form-control" id="image">
                 </div>
                 <button type="submit" name="submit" class="btn btn-primary" style="width: 100%;">Submit</button>
             </form>

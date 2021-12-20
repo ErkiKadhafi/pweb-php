@@ -25,6 +25,51 @@
         return $rows; 
     }
 
+    function upload(){
+        $nama = $_FILES["image"]["name"];
+        $ukuran = $_FILES["image"]["size"];
+        $error = $_FILES["image"]["error"];
+        $tmpName = $_FILES["image"]["tmp_name"];
+
+        // cek apakah ada gambar yang diupload
+        if($error === 4){
+            echo "<script>
+                    alert('Upload gambar telerbih dahulu')
+                </script>";
+            return false;
+        }
+
+        // cek apakah  yang diupload adalah gambar
+        $extValid = ["jpg", "jpeg", "png"];
+        $extFiles = explode(".", $nama);
+        $extFiles = strtolower(end($extFiles));
+        // debug($extFiles);
+        if(!in_array($extFiles, $extValid)){
+            echo "<script>
+                    alert('Tolong hanya upload gambar')
+                </script>";
+            return false;
+        }
+            // echo("hehe");
+            // die();
+        // cek jika ukurannya terlalu besar
+        if($ukuran > 1000000){
+            echo "<script>
+                    alert('Ukuran file terlalu besar')
+                </script>";
+            return false;
+        }
+        
+        // pindahin ke directory 
+        //jangan sampe sama nama gambarnya
+        $newNama = uniqid();
+        $newNama .= "." . $extFiles;
+
+        move_uploaded_file($tmpName, "img/" . $newNama);
+
+        return $newNama;
+    }
+
     function insert($data){
         global $conn;
 
@@ -35,9 +80,16 @@
         $religion = htmlspecialchars($data["religion"]);
         $school_origin = htmlspecialchars($data["school_origin"]);
     
+        // upload files 
+        $gambar = upload();
+
+        if(!$gambar){
+            return false;
+        }
+
         //query insert data
         $query = "INSERT INTO students VALUES 
-            ('', '$name', '$address', '$gender', '$religion', '$school_origin')";
+            ('', '$name', '$address', '$gender', '$religion', '$school_origin', '$gambar')";
         mysqli_query($conn, $query);
         
         // debug(mysqli_affected_rows($conn));
@@ -53,14 +105,22 @@
         $gender = htmlspecialchars($data["gender"]);
         $religion = htmlspecialchars($data["religion"]);
         $school_origin = htmlspecialchars($data["school_origin"]);
+        $old_image = htmlspecialchars($data["image"]);
         
+        if($_FILES["image"]["error"] === 4){
+            $image = $old_image;
+        }else{
+            $image = upload();
+        }
+
         //query update data
         $query = "UPDATE students SET 
                     name='$name',
                     address='$address',
                     gender='$gender',
                     religion='$religion',
-                    school_origin='$school_origin'
+                    school_origin='$school_origin',
+                    image='$image'
                 WHERE id=$id";
         mysqli_query($conn, $query);
 
